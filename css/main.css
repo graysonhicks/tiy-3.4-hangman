@@ -1,11 +1,36 @@
 .hangman {
   width: 90%;
-  height: 400px;
+  height: 250px;
   border: 5px solid black;
-  margin: 0 auto; }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px; }
+
+#turns {
+  display: inline-block;
+  padding-left: 5%; }
+
+#word-space {
+  display: inline-block; }
 
 #letter-spaces-list,
 #keyboard-letters-list {
   text-align: center; }
+
+#letter-spaces-list li {
+  width: 50px;
+  font-size: 74px; }
+
+#keyboard {
+  padding-bottom: 100px; }
+
+.keyboard-buttons {
+  height: 75px;
+  width: 75px;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 10px;
+  border-style: none;
+  margin-top: 30px; }
 
 /*# sourceMappingURL=main.css.map */

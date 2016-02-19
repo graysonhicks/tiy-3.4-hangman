@@ -1,10 +1,11 @@
 (function(){
 
 var randomWord = commonWords[Math.floor(Math.random()*commonWords.length)].toUpperCase();
-var totalGuessesMade = 0;
-var correctGuessesMade = 0;
-var randomWordLength;
-var letterGuessed;
+var totalGuessesMade = 0; //store total guess, when it hits ten, game over
+var correctGuessesMade = 0; // store and compare to length of randomWord, when equal, you've won
+var correctWordArray = []; // store randomWord letters in array so that can be looped over for match
+var randomWordLength;  // when correctGuessesMade reaches this number, you've won
+var letterGuessed; // stores value of the keyboard button pressed to compare to correctWordArray
 var wordSpace; // will hold HTML container for randomWord
 var letterSpaces; //letter that user has just guessed
 var letterSpacesList; // ul to be appended to wordSpace when randomWord is generated
@@ -47,13 +48,13 @@ function buildWordSpace(randomWord){
     letterSpacesList.setAttribute('id', 'letter-spaces-list'); // set id for letterSpaceList for CSS
     letterSpaces = document.createElement('li'); // for each letter in the word, create a li
     letterSpaces.setAttribute('class', 'letters'); // set a class on each letter for CSS
+    letterSpaces.setAttribute('id', 'letter-' + i); // add id based on index so it can be grabbed by click handler if correct
+    correctWordArray.push(randomWord[i]);
     letterSpaces.innerHTML = "_"; // for each letter in the randomWord print an underscore to the li
     letterSpacesList.appendChild(letterSpaces); // add li's to the UL
-    correctWord.push(randomWord[i]);
-    console.log(correctWord);
   }
+
   randomWordLength = randomWord.length; // this will be used to check if correct answer has been reached
-  console.log(randomWord);
 }
 
 buildWordSpace(randomWord);
@@ -64,23 +65,35 @@ for (i = 0; i < keyboardButtonsForClicking.length; i++) {
 
 function keyboardClickHandler(evt){
   letterGuessed = this.innerHTML; // grabs letter value that has been clicked
-  console.log(letterGuessed);
   console.log(randomWord);
-  for (var i = 0; i < randomWord.length; i++) { // loops over randomWord to see if letter clicked is in it
-    if(randomWord[i] == letterGuessed) {
-      console.log("yes");
-      correctGuessesMade += 1;
+  for (var i = 0; i < correctWordArray.length; i++) { // loops over randomWord to see if letter clicked is in it
+
+    if(correctWordArray[i] == letterGuessed) { // if it matches
+      var match = document.getElementById("letter-" + i); //grab that letter based on it index value set in buildWordSpace
+      match.innerHTML = letterGuessed; // set value of matched to the letter guessed
+      correctGuessesMade += 1; // once this matches randomWordLength, then you win
+      youWin(); // check to see if total match
     }
   }
-  this.disabled = true;
-  totalGuessesMade += 1;
-  console.log(totalGuessesMade);
+  this.disabled = true;  // disable button after its been clicked
+
+  totalGuessesMade += 1; // add to total guess counter
+
+  gameOver(); // check to see if too many guesses
+
 }
 
+function gameOver(){
+  if(totalGuessesMade == 10) {
+    alert("Game over!");
+  }
+}
 
-
-function guessChecker() {
-
+function youWin(){
+  if(correctGuessesMade == randomWordLength) {
+    alert("You win!");
+    totalGuessesMade = 0;
+  }
 }
 
 }());
