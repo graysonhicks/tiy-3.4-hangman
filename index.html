@@ -7,26 +7,51 @@
     <title>Hangman</title>
   </head>
   <body>
+  <div class="container">
     <div class="container">
-      <div class="container">
-        <div class="hangman">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="hangman" id="hangman-screen">
 
+          </div>
         </div>
       </div>
-      <div class="container">
-        <div id="turns">
-          <h2>Turns Left: <span id="turns-left"></span></h2>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6" id="turns">
+          <h2>Turns Left: <span id="turns-left">10</span></h2>
         </div>
-        <div id="word-space">
-
-        </div>
-      </div>
-      <div class="container">
-        <div id="keyboard">
+        <div class="col-lg-6" id="word-space">
+          <h2 id="word">Word:</h2>
 
         </div>
       </div>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="container">
+          <div class="col-lg-7 col-lg-offset-2">
+            <div class="input-group full-guess">
+              <input type="text" class="form-control" id="guess-text" placeholder="Take a wild guess!">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="guess-submit" type="button">SUBMIT</button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+          <button class="btn btn-default" id="reset-button" type="submit">RESET</button>
+        </div>
+      </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="keyboard"></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <script src="common-words.js" charset="utf-8"></script>
   <script src="main.js" charset="utf-8"></script>
   </body>
