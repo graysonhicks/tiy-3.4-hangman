@@ -92,12 +92,15 @@ function keyboardClickHandler(evt){
     }
     this.disabled = true; // disable button after its been clicked
   }
-
   totalGuessesMade += 1; // add to total guess counter
-  printTurns();
-
+  printTurns(); // update turn counter
+  pictureChanger();
   gameOver(); // check to see if too many guesses
 
+}
+
+function pictureChanger(){
+  hangmanScreen.style.backgroundImage="url(img/bg" + totalGuessesMade + ".jpg)";
 }
 
 function fullGuessChecker(){
@@ -110,7 +113,6 @@ function fullGuessChecker(){
       printTurns();
       gameOver();
     }
-
 }
 
 function printTurns(){
@@ -123,10 +125,18 @@ function gameOver(){
     hangmanScreen = document.getElementById("hangman-screen");
     hangmanScreen.setAttribute('class', 'hangman game-over');
     hangmanScreen.innerHTML = "<h1>You Lose</h1>";
+    correctWordArray.forEach(fillInBlanks);
     totalGuessesMade = 0;
     disableKeyboard();
   }
 }
+
+function fillInBlanks(element, index, array){ // fills in blanks with correct letters when game is over
+  var match = document.getElementById("letter-" + index); //grab that letter based on it index value set in buildWordSpace
+  match.innerHTML = element; // set value of matched to the correct letter from correctWordArray
+  console.log('blanks');
+}
+
 
 function youWin(){
   if(correctGuessesMade == randomWordLength) {
@@ -134,38 +144,39 @@ function youWin(){
     hangmanScreen.innerHTML = "<h1>You Win!</h1>";
     disableKeyboard();
     totalGuessesMade = 0;
-  } else if(wordGuessed == randomWord){
-    hangmanScreen.setAttribute('class', 'hangman you-win');
-    hangmanScreen.innerHTML = "<h1>You Win!</h1>";
-    totalGuessesMade = 0;
-    for (var i = 0; i < correctWordArray.length; i++) {
-      var match = document.getElementById("letter-" + i);
-      console.log(match); //grab that letter based on it index value set in buildWordSpace
-      match.innerHTML = correctWordArray[i];
+    } else if(wordGuessed == randomWord){
+      hangmanScreen.setAttribute('class', 'hangman you-win');
+      hangmanScreen.innerHTML = "<h1>You Win!</h1>";
+      totalGuessesMade = 0;
+      for (var i = 0; i < correctWordArray.length; i++) {
+        var match = document.getElementById("letter-" + i);
+        console.log(match); //grab that letter based on it index value set in buildWordSpace
+        match.innerHTML = correctWordArray[i];
+      }
+      disableKeyboard();
     }
-    disableKeyboard();
-  }
 }
 
-function disableKeyboard(){
+function disableKeyboard(){ // disables keyboard after win or loss
   for (i = 0; i < keyboardButtonsForClicking.length; i++) {
     keyboardButtonsForClicking[i].disabled = true;
 }
 }
 
 function resetGame(){
-  totalGuessesMade = 0;
+  totalGuessesMade = 0; //reset guesses
   correctGuessesMade = 0;
-  correctWordArray = [];
-  hangmanScreen.setAttribute('class', 'hangman');
-  keyboardDiv.removeChild(keyboardLettersList);
-  buildKeyboard(keyboardArray);
-  wordSpace.removeChild(letterSpacesList);
-  randomWord = commonWords[Math.floor(Math.random()*commonWords.length)].toUpperCase();
-  buildWordSpace(randomWord);
-  hangmanScreen.innerHTML = "";
-  turnsLeft.innerHTML = 10;
-  keyboardClickFunction();
+  correctWordArray = []; // reset correct word
+
+  hangmanScreen.setAttribute('class', 'hangman'); // reset css class for main screen
+  keyboardDiv.removeChild(keyboardLettersList); // remove keyboard
+  buildKeyboard(keyboardArray); // then redo
+  wordSpace.removeChild(letterSpacesList); // remove old word
+  randomWord = commonWords[Math.floor(Math.random()*commonWords.length)].toUpperCase(); // generate new randomWord
+  buildWordSpace(randomWord); // rebuild space for word
+  hangmanScreen.innerHTML = ""; // clear innerHTML of main hangman screen
+  turnsLeft.innerHTML = 10; // reset turns left
+  keyboardClickFunction(); // reset keys for click handler
 }
 
 }());

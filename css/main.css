@@ -11,27 +11,31 @@ body {
   margin-top: 10px;
   box-shadow: 3px 3px 2px slategray;
   text-align: center;
-  border-radius: 10px; }
+  border-radius: 10px;
+  background-image: url("../img/title.jpg");
+  background-size: cover; }
   .hangman h1, .game-over h1, .you-win h1 {
     font-size: 120px;
     font-weight: 700;
     margin-top: 5%; }
 
 .game-over {
-  box-shadow: 2px 2px #941a1a;
-  color: #3d0b0b;
-  background-color: #dc3838;
-  border-color: black;
-  border-width: 2px;
-  opacity: 0.85; }
+  box-shadow: 2px 2px rgba(148, 26, 26, 0.8);
+  color: rgba(61, 11, 11, 0.8);
+  border-color: rgba(0, 0, 0, 0.8);
+  border-width: 2px; }
+  .game-over h1 {
+    font-size: 78px;
+    display: inline-block;
+    padding-right: 250px; }
 
 .you-win {
   box-shadow: 2px 2px #2c8626;
   color: #12370f;
-  background-color: #4fcb47;
   border-color: black;
-  border-width: 2px;
-  opacity: 0.85; }
+  border-width: 2px; }
+  .you-win h1 {
+    font-size: 78px; }
 
 #turns {
   height: 115px; }
@@ -94,10 +98,10 @@ body {
   margin-top: 15px; }
 
 button[disabled] {
-  box-shadow: 2px 2px #941a1a;
-  color: #3d0b0b;
-  background-color: #dc3838;
-  border-color: black;
+  box-shadow: 2px 2px rgba(148, 26, 26, 0.8);
+  color: rgba(61, 11, 11, 0.8);
+  background-color: rgba(220, 56, 56, 0.8);
+  border-color: rgba(0, 0, 0, 0.8);
   border-width: 2px;
   height: 65px;
   width: 65px;

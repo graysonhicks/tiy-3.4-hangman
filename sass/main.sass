@@ -1,7 +1,10 @@
 // colors
 
-$disabledRed: rgb(148, 26, 26)
+$disabledRed: rgba(148, 26, 26, .8)
 $correctGreen: rgb(44, 134, 38)
+
+@mixin winTint($imageurl)
+  background: linear-gradient(rgba(16, 110, 177, .7), rgba(16, 110, 177, .8)), url($imageurl)
 
 body
   background-color: rgb(237, 242, 241)
@@ -17,6 +20,8 @@ body
   box-shadow: 3px 3px 2px slategray
   text-align: center
   border-radius: 10px
+  background-image: url('../img/title.jpg')
+  background-size: cover
   h1
     font-size: 120px
     font-weight: 700
@@ -26,19 +31,21 @@ body
   @extend .hangman
   box-shadow: 2px 2px $disabledRed
   color: darken($disabledRed, 20%)
-  background-color: lighten($disabledRed, 20%)
   border-color: darken($disabledRed, 40%)
   border-width: 2px
-  opacity: .85
+  h1
+    font-size: 78px
+    display: inline-block
+    padding-right: 250px
 
 .you-win
   @extend .hangman
   box-shadow: 2px 2px $correctGreen
   color: darken($correctGreen, 20%)
-  background-color: lighten($correctGreen, 20%)
   border-color: darken($correctGreen, 40%)
   border-width: 2px
-  opacity: .85
+  h1
+    font-size: 78px
 
 #turns
   height: 115px
