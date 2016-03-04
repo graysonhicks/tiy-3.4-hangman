@@ -1,6 +1,32 @@
 (function(){
 
-var randomWord = commonWords[Math.floor(Math.random()*commonWords.length)].toUpperCase();
+var url = "http://randomword.setgetgo.com/get.php";
+
+function fetchJSONP(url, callback) {
+    var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+    var script = document.createElement('script');
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        callback(data);
+    };
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    document.body.appendChild(script);
+}
+
+function logData(data){
+  var randomWord;
+  data = data.Word;
+  data = data.toUpperCase();
+  runProgram(data);
+}
+
+fetchJSONP(url, logData);
+
+function runProgram(data) {
+console.log(data);
+var randomWord = data;
+
 var hangmanScreen = document.getElementById("hangman-screen"); // var to hold screen
 var totalGuessesMade = 0; //store total guess, when it hits ten, game over
 var correctGuessesMade = 0; // store and compare to length of randomWord, when equal, you've won
@@ -22,6 +48,7 @@ var keyboardLettersList;
 var keyboardArray = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                     "A", "S", "D", "F", "G", "H", "J", "K", "L",
                     "Z", "X", "C", "V", "B", "N", "M"];
+
 
 function buildKeyboard(keyboardArray) {
   keyboardLettersList = document.createElement('ul'); // create UL in container
@@ -63,6 +90,7 @@ function buildWordSpace(randomWord){
 
 buildWordSpace(randomWord);
 
+
 // EVENT LISTENERS
 
 function keyboardClickFunction(){
@@ -79,7 +107,7 @@ resetButton.addEventListener('click', resetGame);
 
 function keyboardClickHandler(evt){
   letterGuessed = this.innerHTML; // grabs letter value that has been clicked
-  console.log(randomWord);
+
   for (var i = 0; i < correctWordArray.length; i++) { // loops over randomWord to see if letter clicked is in it
 
     if(correctWordArray[i] == letterGuessed) { // if it matches
@@ -144,7 +172,7 @@ function youWin(){
     hangmanScreen.innerHTML = "<h1>You Win!</h1>";
     disableKeyboard();
     totalGuessesMade = 0;
-    } else if(wordGuessed == randomWord){
+  } else if(wordGuessed == randomWord){
       hangmanScreen.setAttribute('class', 'hangman you-win');
       hangmanScreen.innerHTML = "<h1>You Win!</h1>";
       totalGuessesMade = 0;
@@ -178,5 +206,5 @@ function resetGame(){
   turnsLeft.innerHTML = 10; // reset turns left
   keyboardClickFunction(); // reset keys for click handler
 }
-
+}
 }());
